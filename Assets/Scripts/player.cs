@@ -5,6 +5,7 @@ using UnityEngine;
 public class player : MonoBehaviour {
 	private Rigidbody rg;
 	private float nextfire;
+	private float originX;
 
 	public Transform sparkle;
 	[SerializeField] private WaveCalculator waveCalc;
@@ -12,6 +13,7 @@ public class player : MonoBehaviour {
 	// Use this for initialization
 	private float speed = 5f;
 	void Start () {
+		originX = transform.localPosition.x;
 		rg = GetComponent<Rigidbody> ();
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
 	}
@@ -19,6 +21,8 @@ public class player : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		transform.Translate (Vector3.forward * speed * Time.deltaTime, Space.World);
+		var localPosition = transform.localPosition;
+		transform.localPosition = new Vector3(originX, localPosition.y, localPosition.z);
 		if (Input.GetButtonDown ("Jump")) {
 			rg.velocity = new Vector3 (0, 8, 0);
 		}

@@ -12,12 +12,15 @@ public class BlockerManager : MonoBehaviour
 {
 	public GameObject blockerPrefab1;
 	public GameObject blockerPrefab2;
+	public GameObject blockerPrefab3;
 
 	public GameObject blockerRoot1;
 	public GameObject blockerRoot2;
+	public GameObject blockerRoot3;
 
 	public List<Vector3> blocker1Positions;
 	public List<Vector3> blocker2Positions;
+	public List<Vector3> blocker3Positions;
 
 	private void Awake()
 	{
@@ -42,6 +45,12 @@ public class BlockerManager : MonoBehaviour
 			var blocker = blockerRoot2.Append(blockerPrefab2);
 			blocker.transform.position = item;
 		}
+
+		foreach (var item in blocker3Positions)
+		{
+			var blocker = blockerRoot3.Append(blockerPrefab3);
+			blocker.transform.position = item;
+		}
 	}
 }
 
@@ -51,6 +60,7 @@ public class BlockerManagerEditor : Editor
 {
 	private List<GameObject> blockers1 = new List<GameObject>();
 	private List<GameObject> blockers2 = new List<GameObject>();
+	private List<GameObject> blockers3 = new List<GameObject>();
 
 	public void OnEnable()
 	{
@@ -68,6 +78,12 @@ public class BlockerManagerEditor : Editor
 			var obj = manager.blockerRoot2.transform.GetChild(i).gameObject;
 			blockers2.Add(obj);
 		}
+		blockers3 = new List<GameObject>();
+		for(int i = 0; i < manager.blockerRoot3.transform.childCount; i++)
+		{
+			var obj = manager.blockerRoot3.transform.GetChild(i).gameObject;
+			blockers3.Add(obj);
+		}
 	}
 
 	public override void OnInspectorGUI()
@@ -79,12 +95,15 @@ public class BlockerManagerEditor : Editor
 		{
 			Save(blockers1, manager.blocker1Positions, manager.blockerRoot1, manager.blockerPrefab1);
 			Save(blockers2, manager.blocker2Positions, manager.blockerRoot2, manager.blockerPrefab2);
+			Save(blockers3, manager.blocker3Positions, manager.blockerRoot3, manager.blockerPrefab3);
+
 		}
 
 		if(GUILayout.Button("Load"))
 		{
 			Load(blockers1, manager.blocker1Positions, manager.blockerRoot1, manager.blockerPrefab1);
 			Load(blockers2, manager.blocker2Positions, manager.blockerRoot2, manager.blockerPrefab2);
+			Load(blockers3, manager.blocker3Positions, manager.blockerRoot3, manager.blockerPrefab3);
 		}
 	}
 
@@ -119,3 +138,4 @@ public class BlockerManagerEditor : Editor
 #endif
 
 }
+

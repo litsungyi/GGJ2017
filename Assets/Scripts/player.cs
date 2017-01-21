@@ -9,7 +9,7 @@ public class player : MonoBehaviour {
 	private Quaternion originRotation;
 
 	public Transform sparkle;
-	public Transform plusup;
+	public PlusUpParticleManager plusup;
 	[SerializeField] private WaveCalculator waveCalc;
 
 	PlayerAudio playerAudio;
@@ -22,7 +22,7 @@ public class player : MonoBehaviour {
 		originRotation = sparkle.transform.localRotation;
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
 		playerAudio = GetComponent<PlayerAudio>();
-		playerAudio.playSounds(PlayerAudio.Sounds.BABY_HURT);
+		//playerAudio.playSounds(PlayerAudio.Sounds.BABY_HURT);
 	}
 
 	IEnumerator stopSparkles()
@@ -35,7 +35,7 @@ public class player : MonoBehaviour {
 	IEnumerator stopplusup()
 	{
 		yield return new WaitForSeconds (2f);
-		plusup.GetComponent<ParticleSystem>().enableEmission = false;
+		plusup.Enable(false);
 	}
 
 	public void Move(float deltaTime)
@@ -58,7 +58,6 @@ public class player : MonoBehaviour {
 
 	public void Jump()
 	{
-		Debug.Log("Jump");
 		playerAudio.playSounds(PlayerAudio.Sounds.JET);
 		
 		if (waveEnabled)
@@ -93,7 +92,7 @@ public class player : MonoBehaviour {
 
 	public void LevelUp()
 	{
-		plusup.GetComponent<ParticleSystem> ().enableEmission = true;
+		plusup.Enable(true);
 		StartCoroutine (stopplusup ());
 	}
 

@@ -5,8 +5,9 @@ using UnityEngine;
 public class player : MonoBehaviour {
 	private Rigidbody rg;
 	private float nextfire;
-	
+
 	public Transform sparkle;
+	[SerializeField] private WaveCalculator waveCalc;
 
 	// Use this for initialization
 	private float speed = 5f;

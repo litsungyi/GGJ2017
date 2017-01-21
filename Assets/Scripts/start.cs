@@ -5,7 +5,8 @@ using UnityEngine.UI;
 public class start : MonoBehaviour {
     [SerializeField]
     private Button startBtn;
-   
+    [SerializeField]
+    private InputField MyNameTxt;
     // Use this for initialization
     void Start () {
         startBtn.onClick.AddListener(go);
@@ -18,6 +19,7 @@ public class start : MonoBehaviour {
 	}
     void go()
     {
+        Debug.Log(MyNameTxt.text);
         this.gameObject.SetActive(false);
     }
 }

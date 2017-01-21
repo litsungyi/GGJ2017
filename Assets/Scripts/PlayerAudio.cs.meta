@@ -1,10 +1,25 @@
 fileFormatVersion: 2
 guid: 6c8768a475922c04ab46b053c82c0cb6
-timeCreated: 1484991449
+timeCreated: 1485002553
 licenseType: Free
 MonoImporter:
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - adultScream: {fileID: 8300000, guid: 124b1b06ecb63b145b489b7b5d3ad710, type: 3}
+  - adultWalk: {instanceID: 0}
+  - babyHurt: {instanceID: 0}
+  - babyLaugh: {instanceID: 0}
+  - babyWalk: {instanceID: 0}
+  - explosion: {instanceID: 0}
+  - femaleLaugh: {instanceID: 0}
+  - femaleScream: {instanceID: 0}
+  - hit: {instanceID: 0}
+  - jump: {instanceID: 0}
+  - levelUp: {instanceID: 0}
+  - monsterYell: {instanceID: 0}
+  - pickCoin: {instanceID: 0}
+  - powerUp: {instanceID: 0}
+  - jet: {instanceID: 0}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

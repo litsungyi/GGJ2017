@@ -44,6 +44,6 @@ public class WaveCalculator : MonoBehaviour
 
 	private void FixedUpdate()
 	{
-		Debug.Log(this.value);
+		//Debug.Log(this.value);
 	}
 }

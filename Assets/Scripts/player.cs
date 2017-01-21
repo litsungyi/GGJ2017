@@ -12,13 +12,17 @@ public class player : MonoBehaviour {
 	public Transform plusup;
 	[SerializeField] private WaveCalculator waveCalc;
 
+	PlayerAudio playerAudio;
+	
 	// Use this for initialization
 	private float speed = 5f;
-	void Start () {
+	void Awake () {
 		originX = transform.localPosition.x;
 		rg = GetComponent<Rigidbody> ();
 		originRotation = sparkle.transform.localRotation;
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
+		playerAudio = GetComponent<PlayerAudio>();
+		playerAudio.playSounds(PlayerAudio.Sounds.BABY_HURT);
 	}
 
 	IEnumerator stopSparkles()
@@ -39,6 +43,7 @@ public class player : MonoBehaviour {
 		transform.Translate (Vector3.forward * speed *deltaTime, Space.World);
 		var localPosition = transform.localPosition;
 		transform.localPosition = new Vector3(originX, localPosition.y, localPosition.z);
+		
 	}
 
 	public void UpdateBoost()
@@ -53,6 +58,9 @@ public class player : MonoBehaviour {
 
 	public void Jump()
 	{
+		Debug.Log("Jump");
+		playerAudio.playSounds(PlayerAudio.Sounds.JET);
+		
 		if (waveEnabled)
 		{
 			var value = waveCalc.value;
@@ -78,6 +86,7 @@ public class player : MonoBehaviour {
 			rg.velocity = new Vector3(0, 8, 0);
 		}
 
+		
 		sparkle.GetComponent<ParticleSystem>().enableEmission = true;
 		StartCoroutine(stopSparkles());
 	}
@@ -91,6 +100,7 @@ public class player : MonoBehaviour {
 	public void Fire()
 	{
 		rg.velocity = new Vector3(0, 5, 6);
+		
 	}
 
 	public void SpeedUp(float speedModify)
@@ -101,6 +111,7 @@ public class player : MonoBehaviour {
 	public void JumpUp(float speedModify)
 	{
 		rg.AddForce(Vector3.up*speedModify);
+		
 	}
 
 	void OnCollisionEnter(Collision col)
@@ -110,6 +121,7 @@ public class player : MonoBehaviour {
 		{
 			coollidable.OnCollisionEnter(this);
 		}
+		playerAudio.playSounds(PlayerAudio.Sounds.JET);
 	}
 
 	void OnTriggerEnter(Collider col)

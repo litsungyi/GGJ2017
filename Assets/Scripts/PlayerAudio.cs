@@ -19,7 +19,8 @@ public class PlayerAudio : MonoBehaviour {
 									  LEVEL_UP,
 									  MONSTER_YELL,
 									  PICK_COIN,
-									  POWER_UP
+									  POWER_UP,
+									  JET
 	                                  };
 	AudioSource player_audio;  
 	
@@ -37,14 +38,26 @@ public class PlayerAudio : MonoBehaviour {
     public AudioClip monsterYell;         		                      
 	public AudioClip pickCoin;
 	public AudioClip powerUp;
+	public AudioClip jet;
+
+	AudioClip bgSound = null;
+	float timeStemp;
+	
 	// Use this for initialization
 	void Awake () {	
 			player_audio = GetComponent <AudioSource> ();
+			bgSound = null;
+			player_audio.clip = bgSound;
+	        timeStemp = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		
+			if(bgSound != null && Time.time - timeStemp > 1){
+				player_audio.Play();
+				timeStemp = Time.time;
+			}
 	}
 	
 	public void playSounds(Sounds clip)
@@ -94,11 +107,15 @@ public class PlayerAudio : MonoBehaviour {
 			case Sounds.POWER_UP:
 				player_audio.clip = powerUp;
 				 break;
+			case Sounds.JET:
+				player_audio.clip = jet;
+				 break;
 			default :
 				soundsExist = false;
 				break;
 		}
 		
 		if(soundsExist) player_audio.Play ();
+		player_audio.clip = bgSound;
 	}
 }

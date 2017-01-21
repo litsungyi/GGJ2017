@@ -1,4 +1,5 @@
 ﻿public interface ITriggable
 {
-	void OnTrige(player target);
+	void OnTriggerEnter(player target);
+	void OnTriggerExit(player target);
 }

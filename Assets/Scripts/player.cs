@@ -41,14 +41,12 @@ public class player : MonoBehaviour {
 		}
 	}
 
-
-
 	void OnTriggerEnter(Collider col)
 	{
 		var triggable = col.gameObject.GetComponent<ITriggable>();
 		if (triggable != null)
 		{
-			triggable.OnTrige(this);
+			triggable.OnTriggerEnter(this);
 		}
 	}
 

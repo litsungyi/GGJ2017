@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class player : MonoBehaviour {
 	private Rigidbody rg;
-	private float nextfire;
+	private bool waveEnabled;
 	private float originX;
 
 	public Transform sparkle;
@@ -17,25 +17,52 @@ public class player : MonoBehaviour {
 		rg = GetComponent<Rigidbody> ();
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		transform.Translate (Vector3.forward * speed * Time.deltaTime, Space.World);
-		var localPosition = transform.localPosition;
-		transform.localPosition = new Vector3(originX, localPosition.y, localPosition.z);
-		if (Input.GetButtonDown ("Jump")) {
-			rg.velocity = new Vector3 (0, 8, 0);
-		}
-		if (Input.GetButton ("Fire1") && Time.deltaTime > nextfire) {
-			rg.velocity = new Vector3 (0, 5, 6);
-			sparkle.GetComponent<ParticleSystem> ().enableEmission = true;
-			StartCoroutine (stopSparkles ());
-		}
-	}
+
 	IEnumerator stopSparkles()
 	{
 		yield return new WaitForFixedUpdate();
 		sparkle.GetComponent<ParticleSystem>().enableEmission = false;
+	}
+
+	public void Move(float deltaTime)
+	{
+		transform.Translate (Vector3.forward * speed *deltaTime, Space.World);
+		var localPosition = transform.localPosition;
+		transform.localPosition = new Vector3(originX, localPosition.y, localPosition.z);
+	}
+
+	public void UpdateBoost()
+	{
+		if (!waveEnabled)
+		{
+			waveEnabled = true;
+			waveCalc.enabled = true;
+			// TODO: Set waveCalc.amplitute & waveCalc.waveLength
+		}
+	}
+
+	public void Jump()
+	{
+		if (waveEnabled)
+		{
+			var value = waveCalc.value;
+			Debug.Log(value);
+			rg.velocity = new Vector3(0, value, 0);
+			waveEnabled = false;
+			waveCalc.enabled = false;
+		}
+		else
+		{
+			rg.velocity = new Vector3(0, 8, 0);
+		}
+
+		sparkle.GetComponent<ParticleSystem>().enableEmission = true;
+		StartCoroutine(stopSparkles());
+	}
+
+	public void Fire()
+	{
+		rg.velocity = new Vector3(0, 5, 6);
 	}
 
 	public void SpeedUp(float speedModify)

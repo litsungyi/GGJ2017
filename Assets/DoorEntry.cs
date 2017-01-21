@@ -7,11 +7,13 @@ public class DoorEntry : MonoBehaviour, ITriggable
 	public GameObject doorExit;
 
 	#region ITriggable implementation
-
-	void ITriggable.OnTrige(player target)
+	void ITriggable.OnTriggerEnter(player target)
 	{
 		target.transform.position = doorExit.transform.position;
 	}
 
+	void ITriggable.OnTriggerExit(player target)
+	{
+	}
 	#endregion
 }

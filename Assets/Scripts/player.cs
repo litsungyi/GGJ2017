@@ -12,6 +12,7 @@ public class player : MonoBehaviour {
 	public Transform sparkle;
 	public PlusUpParticleManager plusup;
 	[SerializeField] private WaveCalculator waveCalc;
+	public int health = 3;
 
 	PlayerAudio playerAudio;
 	
@@ -125,7 +126,11 @@ public class player : MonoBehaviour {
 	public void JumpUp(float speedModify)
 	{
 		rg.AddForce(Vector3.up*speedModify);
-		
+	}
+
+	public void Hurt()
+	{
+		--health;
 	}
 
 	void OnCollisionEnter(Collision col)

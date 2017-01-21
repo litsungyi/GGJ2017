@@ -9,7 +9,7 @@ public class WaveCalculator : MonoBehaviour
 	[Range(1, 100)]
 	public float amplitute;
 
-	[Range(0, 10)]
+	[Range(0.1f, 1f)]
 	public float waveLength;
 
 	private float delta

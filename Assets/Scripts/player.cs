@@ -29,14 +29,14 @@ public class player : MonoBehaviour {
 
 	IEnumerator stopSparkles()
 	{
-		yield return new WaitForFixedUpdate();
+		yield return new WaitForSeconds(0.2f);
 		sparkle.GetComponent<ParticleSystem>().enableEmission = false;
 		sparkle.transform.localRotation = originRotation;
 	}
 
 	IEnumerator stopplusup()
 	{
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds(2f);
 		plusup.Enable(false);
 	}
 
@@ -105,6 +105,9 @@ public class player : MonoBehaviour {
 	public void LevelUp()
 	{
 		plusup.Enable(true);
+		waveCalc.amplitute += 10f;
+		waveCalc.waveLength *= 0.9f;
+
 		StartCoroutine (stopplusup ());
 	}
 

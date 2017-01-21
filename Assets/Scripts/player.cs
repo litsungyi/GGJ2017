@@ -45,8 +45,10 @@ public class player : MonoBehaviour {
 
 	void OnTriggerEnter(Collider col)
 	{
-		if (col.name == "door") {
-			transform.position = new Vector3 (-3.87f, 0.69f, -2.78f);
+		var triggable = col.gameObject.GetComponent<ITriggable>();
+		if (triggable != null)
+		{
+			triggable.OnTrige(this);
 		}
 	}
 

@@ -2,19 +2,17 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class obstacle : MonoBehaviour, ICollidable
+public class EnhanceItem : MonoBehaviour, ICollidable
 {
-	private Renderer rend;
-	// Use this for initialization
-	void Start () {
-		rend = GetComponent<Renderer> ();
-	}
+	[Range(10, 1000)]
+	[SerializeField] private float speedModify = 50f;
 
 	#region ICollidable implementation
 
 	void ICollidable.OnCollisionEnter(player target)
 	{
-		rend.material.color = Color.red;
+		target.SpeedUp(speedModify);
+		Destroy(gameObject);
 	}
 
 	void ICollidable.OnCollisionExit(player target)

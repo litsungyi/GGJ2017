@@ -5,6 +5,8 @@ using UnityEngine;
 public class player : MonoBehaviour {
 	private Rigidbody rg;
 	private float nextfire;
+
+	public Transform plusup;
 	
 	public Transform sparkle;
 
@@ -13,6 +15,7 @@ public class player : MonoBehaviour {
 	void Start () {
 		rg = GetComponent<Rigidbody> ();
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
+		plusup.GetComponent<ParticleSystem> ().enableEmission = false;
 	}
 	
 	// Update is called once per frame
@@ -26,12 +29,15 @@ public class player : MonoBehaviour {
 			sparkle.GetComponent<ParticleSystem> ().enableEmission = true;
 			StartCoroutine (stopSparkles ());
 		}
+
 	}
 	IEnumerator stopSparkles()
 	{
 		yield return new WaitForFixedUpdate();
 		sparkle.GetComponent<ParticleSystem>().enableEmission = false;
 	}
+
+
 	void OnCollisionEnter(Collision col)
 	{
 		if (col.gameObject.name == "plus obj") {
@@ -46,7 +52,14 @@ public class player : MonoBehaviour {
 	{
 		if (col.name == "door") {
 			transform.position = new Vector3 (-3.87f, 0.69f, -2.78f);
+			plusup.GetComponent<ParticleSystem> ().enableEmission = true;
+			StartCoroutine (stopplusup ());
 		}
+	}
+	IEnumerator stopplusup()
+	{
+		yield return new WaitForSeconds (2f);
+		plusup.GetComponent<ParticleSystem>().enableEmission = false;
 	}
 
 }

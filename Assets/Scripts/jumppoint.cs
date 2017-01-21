@@ -17,6 +17,7 @@ public class jumppoint : MonoBehaviour, ICollidable
 	void ICollidable.OnCollisionEnter(player target)
 	{
 		target.JumpUp(speedModify);
+		Destroy(gameObject);
 	}
 
 	void ICollidable.OnCollisionExit(player target)

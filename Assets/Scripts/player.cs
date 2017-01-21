@@ -33,11 +33,18 @@ public class player : MonoBehaviour {
 		yield return new WaitForFixedUpdate();
 		sparkle.GetComponent<ParticleSystem>().enableEmission = false;
 	}
+
+	public void SpeedUp(float speedModify)
+	{
+		rg.AddForce (Vector3.forward*speed*speedModify);
+	}
+
 	void OnCollisionEnter(Collision col)
 	{
-		if (col.gameObject.name == "plus obj") {
-			Destroy (col.gameObject);
-			rg.AddForce (Vector3.forward*speed*50f);
+		var coollidable = col.gameObject.GetComponent<ICollidable>();
+		if (coollidable != null)
+		{
+			coollidable.OnCollisionEnter(this);
 		}
 	}
 

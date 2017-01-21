@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class player : MonoBehaviour {
+	private bool gameStart;
 	private Rigidbody rg;
 	private bool waveEnabled;
 	private float originX;
@@ -23,6 +24,7 @@ public class player : MonoBehaviour {
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
 		playerAudio = GetComponent<PlayerAudio>();
 		//playerAudio.playSounds(PlayerAudio.Sounds.BABY_HURT);
+		gameStart = false;
 	}
 
 	IEnumerator stopSparkles()
@@ -38,8 +40,18 @@ public class player : MonoBehaviour {
 		plusup.Enable(false);
 	}
 
+	public void GameStart()
+	{
+		gameStart = true;
+	}
+
 	public void Move(float deltaTime)
 	{
+		if (!gameStart)
+		{
+			return;
+		}
+
 		transform.Translate (Vector3.forward * speed *deltaTime, Space.World);
 		var localPosition = transform.localPosition;
 		transform.localPosition = new Vector3(originX, localPosition.y, localPosition.z);

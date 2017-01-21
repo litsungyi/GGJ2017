@@ -4,10 +4,10 @@ using UnityEngine;
 
 public class WaveCalculator : MonoBehaviour
 {
-	[Range(1, 10)]
+	[Range(1, 1000)]
 	public float amplitute;
 
-	[Range(1, 10)]
+	[Range(0, 10)]
 	public float waveLength;
 
 	private float delta

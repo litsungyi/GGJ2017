@@ -4,62 +4,121 @@ using UnityEngine;
 
 public class player : MonoBehaviour {
 	private Rigidbody rg;
-	private float nextfire;
+	private bool waveEnabled;
+	private float originX;
+	private Quaternion originRotation;
 
-	public Transform plusup;
-	
 	public Transform sparkle;
+	public Transform plusup;
+	[SerializeField] private WaveCalculator waveCalc;
 
 	// Use this for initialization
 	private float speed = 5f;
 	void Start () {
+		originX = transform.localPosition.x;
 		rg = GetComponent<Rigidbody> ();
+		originRotation = sparkle.transform.localRotation;
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
-		plusup.GetComponent<ParticleSystem> ().enableEmission = false;
 	}
-	
-	// Update is called once per frame
-	void Update () {
-		transform.Translate (Vector3.forward * speed * Time.deltaTime, Space.World);
-		if (Input.GetButtonDown ("Jump")) {
-			rg.velocity = new Vector3 (0, 8, 0);
-		}
-		if (Input.GetButton ("Fire1") && Time.deltaTime > nextfire) {
-			rg.velocity = new Vector3 (0, 5, 6);
-			sparkle.GetComponent<ParticleSystem> ().enableEmission = true;
-			StartCoroutine (stopSparkles ());
-		}
 
-	}
 	IEnumerator stopSparkles()
 	{
 		yield return new WaitForFixedUpdate();
 		sparkle.GetComponent<ParticleSystem>().enableEmission = false;
+		sparkle.transform.localRotation = originRotation;
 	}
 
-
-	void OnCollisionEnter(Collision col)
-	{
-		if (col.gameObject.name == "plus obj") {
-			Destroy (col.gameObject);
-			rg.AddForce (Vector3.forward*speed*50f);
-		}
-	}
-
-
-
-	void OnTriggerEnter(Collider col)
-	{
-		if (col.name == "door") {
-			transform.position = new Vector3 (-3.87f, 0.69f, -2.78f);
-			plusup.GetComponent<ParticleSystem> ().enableEmission = true;
-			StartCoroutine (stopplusup ());
-		}
-	}
 	IEnumerator stopplusup()
 	{
 		yield return new WaitForSeconds (2f);
 		plusup.GetComponent<ParticleSystem>().enableEmission = false;
+	}
+
+	public void Move(float deltaTime)
+	{
+		transform.Translate (Vector3.forward * speed *deltaTime, Space.World);
+		var localPosition = transform.localPosition;
+		transform.localPosition = new Vector3(originX, localPosition.y, localPosition.z);
+	}
+
+	public void UpdateBoost()
+	{
+		if (!waveEnabled)
+		{
+			waveEnabled = true;
+			waveCalc.enabled = true;
+			// TODO: Set waveCalc.amplitute & waveCalc.waveLength
+		}
+	}
+
+	public void Jump()
+	{
+		if (waveEnabled)
+		{
+			var value = waveCalc.value;
+			Debug.Log(value);
+
+			value *= 50f;
+			if (value < 0)
+			{
+				value -= 100f;
+				sparkle.transform.Rotate(40, 0, 0);
+				//sparkle.transform.localRotation = new Quaternion(220, originRotation.y, originRotation.z, originRotation.w);
+			}
+			else
+			{
+				value += 100f;
+			}
+			JumpUp(value);
+			waveEnabled = false;
+			waveCalc.enabled = false;
+		}
+		else
+		{
+			rg.velocity = new Vector3(0, 8, 0);
+		}
+
+		sparkle.GetComponent<ParticleSystem>().enableEmission = true;
+		StartCoroutine(stopSparkles());
+	}
+
+	public void LevelUp()
+	{
+		plusup.GetComponent<ParticleSystem> ().enableEmission = true;
+		StartCoroutine (stopplusup ());
+	}
+
+	public void Fire()
+	{
+		rg.velocity = new Vector3(0, 5, 6);
+	}
+
+	public void SpeedUp(float speedModify)
+	{
+		rg.AddForce(Vector3.forward*speed*speedModify);
+	}
+
+	public void JumpUp(float speedModify)
+	{
+		rg.AddForce(Vector3.up*speedModify);
+	}
+
+	void OnCollisionEnter(Collision col)
+	{
+		var coollidable = col.gameObject.GetComponent<ICollidable>();
+		if (coollidable != null)
+		{
+			coollidable.OnCollisionEnter(this);
+		}
+	}
+
+	void OnTriggerEnter(Collider col)
+	{
+		var triggable = col.gameObject.GetComponent<ITriggable>();
+		if (triggable != null)
+		{
+			triggable.OnTriggerEnter(this);
+		}
 	}
 
 }

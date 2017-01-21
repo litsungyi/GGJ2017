@@ -36,7 +36,12 @@ public class player : MonoBehaviour {
 
 	public void SpeedUp(float speedModify)
 	{
-		rg.AddForce (Vector3.forward*speed*speedModify);
+		rg.AddForce(Vector3.forward*speed*speedModify);
+	}
+
+	public void JumpUp(float speedModify)
+	{
+		rg.AddForce (Vector3.up*speedModify);
 	}
 
 	void OnCollisionEnter(Collision col)

@@ -2,18 +2,26 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class jumppoint : MonoBehaviour {
-	//private Rigidbody rg;
+public class jumppoint : MonoBehaviour, ICollidable
+{
+	[Range(10, 1000)]
+	[SerializeField] private float speedModify = 500f;
 
 	// Use this for initialization
 	void Start () {
 		//rg = GetComponents<Rigidbody> ();	
 	}
-	
-	// Update is called once per frame
-	void OnCollisionEnter (Collision col) {
-		if (col.collider.name == "player") {
-			col.gameObject.GetComponent<Rigidbody> ().AddForce (Vector3.up*500);
-		}
+
+	#region ICollidable implementation
+
+	void ICollidable.OnCollisionEnter(player target)
+	{
+		target.JumpUp(speedModify);
 	}
+
+	void ICollidable.OnCollisionExit(player target)
+	{
+	}
+
+	#endregion
 }

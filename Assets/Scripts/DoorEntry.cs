@@ -9,6 +9,7 @@ public class DoorEntry : MonoBehaviour, ITriggable
 	#region ITriggable implementation
 	void ITriggable.OnTriggerEnter(player target)
 	{
+		target.LevelUp();
 		target.transform.position = doorExit.transform.position;
 	}
 

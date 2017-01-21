@@ -46,5 +46,4 @@ public class WaveCalculator : MonoBehaviour
 	{
 		Debug.Log(this.value);
 	}
-
 }

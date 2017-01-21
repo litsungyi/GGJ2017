@@ -132,5 +132,12 @@ public class player : MonoBehaviour {
 			triggable.OnTriggerEnter(this);
 		}
 	}
-
+    void OnTriggerExit(Collider col)
+    {
+        var triggable = col.gameObject.GetComponent<ITriggable>();
+        if (triggable != null)
+        {
+            triggable.OnTriggerExit(this);
+        }
+    }
 }

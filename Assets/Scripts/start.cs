@@ -8,7 +8,9 @@ public class start : MonoBehaviour {
     [SerializeField]
     private Button startBtn;
     [SerializeField]
-    private InputField MyNameTxt;
+	private InputField MyNameTxt;
+	[SerializeField]
+	private WaveDisplay wave;
     // Use this for initialization
     void Start () {
         startBtn.onClick.AddListener(go);
@@ -22,6 +24,7 @@ public class start : MonoBehaviour {
     {
         Debug.Log(MyNameTxt.text);
         this.gameObject.SetActive(false);
+		wave.gameObject.SetActive(true);
 		target.GameStart();
     }
 }

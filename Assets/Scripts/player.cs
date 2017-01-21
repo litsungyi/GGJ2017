@@ -63,7 +63,7 @@ public class player : MonoBehaviour {
 		if (!waveEnabled)
 		{
 			waveEnabled = true;
-			waveCalc.enabled = true;
+			//waveCalc.enabled = true;
 			// TODO: Set waveCalc.amplitute & waveCalc.waveLength
 		}
 	}
@@ -77,7 +77,7 @@ public class player : MonoBehaviour {
 			var value = waveCalc.value;
 			Debug.Log(value);
 
-			value *= 50f;
+			value *= 30f;
 			if (value < 0)
 			{
 				value -= 100f;
@@ -90,7 +90,7 @@ public class player : MonoBehaviour {
 			}
 			JumpUp(value);
 			waveEnabled = false;
-			waveCalc.enabled = false;
+			//waveCalc.enabled = false;
 		}
 		else
 		{

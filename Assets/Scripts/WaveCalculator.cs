@@ -4,7 +4,9 @@ using UnityEngine;
 
 public class WaveCalculator : MonoBehaviour
 {
-	[Range(1, 1000)]
+	[SerializeField] private WaveDisplay display;
+
+	[Range(1, 100)]
 	public float amplitute;
 
 	[Range(0, 10)]
@@ -16,11 +18,26 @@ public class WaveCalculator : MonoBehaviour
 		set;
 	}
 
+	public float xValue
+	{
+		get
+		{
+			return delta / waveLength;
+		}
+	}
+
+	public float lastValue
+	{
+		get;
+		private set;
+	}
+
 	public float value
 	{
 		get
 		{
-			return amplitute * Mathf.Sin(Mathf.PI * delta / waveLength);
+			lastValue = amplitute * Mathf.Sin(2 * Mathf.PI * xValue);
+			return lastValue;
 		}
 	}
 
@@ -40,6 +57,7 @@ public class WaveCalculator : MonoBehaviour
 	private void Update()
 	{
 		delta += Time.deltaTime;
+		display.UpdateWave(this);
 	}
 
 	private void FixedUpdate()

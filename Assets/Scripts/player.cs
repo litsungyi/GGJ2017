@@ -3,13 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class player : MonoBehaviour {
+	private bool gameStart;
 	private Rigidbody rg;
 	private bool waveEnabled;
 	private float originX;
 	private Quaternion originRotation;
 
 	public Transform sparkle;
-	public Transform plusup;
+	public PlusUpParticleManager plusup;
 	[SerializeField] private WaveCalculator waveCalc;
 
 	PlayerAudio playerAudio;
@@ -22,7 +23,8 @@ public class player : MonoBehaviour {
 		originRotation = sparkle.transform.localRotation;
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
 		playerAudio = GetComponent<PlayerAudio>();
-		playerAudio.playSounds(PlayerAudio.Sounds.BABY_HURT);
+		//playerAudio.playSounds(PlayerAudio.Sounds.BABY_HURT);
+		gameStart = false;
 	}
 
 	IEnumerator stopSparkles()
@@ -35,11 +37,21 @@ public class player : MonoBehaviour {
 	IEnumerator stopplusup()
 	{
 		yield return new WaitForSeconds (2f);
-		plusup.GetComponent<ParticleSystem>().enableEmission = false;
+		plusup.Enable(false);
+	}
+
+	public void GameStart()
+	{
+		gameStart = true;
 	}
 
 	public void Move(float deltaTime)
 	{
+		if (!gameStart)
+		{
+			return;
+		}
+
 		transform.Translate (Vector3.forward * speed *deltaTime, Space.World);
 		var localPosition = transform.localPosition;
 		transform.localPosition = new Vector3(originX, localPosition.y, localPosition.z);
@@ -51,14 +63,13 @@ public class player : MonoBehaviour {
 		if (!waveEnabled)
 		{
 			waveEnabled = true;
-			waveCalc.enabled = true;
+			//waveCalc.enabled = true;
 			// TODO: Set waveCalc.amplitute & waveCalc.waveLength
 		}
 	}
 
 	public void Jump()
 	{
-		Debug.Log("Jump");
 		playerAudio.playSounds(PlayerAudio.Sounds.JET);
 		
 		if (waveEnabled)
@@ -66,7 +77,7 @@ public class player : MonoBehaviour {
 			var value = waveCalc.value;
 			Debug.Log(value);
 
-			value *= 50f;
+			value *= 30f;
 			if (value < 0)
 			{
 				value -= 100f;
@@ -79,7 +90,7 @@ public class player : MonoBehaviour {
 			}
 			JumpUp(value);
 			waveEnabled = false;
-			waveCalc.enabled = false;
+			//waveCalc.enabled = false;
 		}
 		else
 		{
@@ -93,7 +104,7 @@ public class player : MonoBehaviour {
 
 	public void LevelUp()
 	{
-		plusup.GetComponent<ParticleSystem> ().enableEmission = true;
+		plusup.Enable(true);
 		StartCoroutine (stopplusup ());
 	}
 

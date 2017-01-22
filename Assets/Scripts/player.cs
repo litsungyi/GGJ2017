@@ -2,6 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum Age
+{
+	Baby,
+	Kid,
+	Adult,
+	Old,
+}
+
 public class player : MonoBehaviour {
 	private bool gameStart;
 	private Rigidbody rg;
@@ -13,6 +21,13 @@ public class player : MonoBehaviour {
 	[SerializeField] private List<GameObject> models;
 
 	public GameObject weather;
+	public Age age
+	{
+		get
+		{
+			return (Age) currentModel;
+		}
+	}
 
 	public Transform sparkle;
 	public PlusUpParticleManager plusup;

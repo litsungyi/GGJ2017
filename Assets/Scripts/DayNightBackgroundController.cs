@@ -7,6 +7,8 @@ public class DayNightBackgroundController : MonoBehaviour {
     [SerializeField]
     public Transform player;
     [SerializeField]
+    public Image BabyBg;
+    [SerializeField]
     public Image KidBg;
     [SerializeField]
     public Image AdultBg;
@@ -49,7 +51,7 @@ public class DayNightBackgroundController : MonoBehaviour {
             switch (currentBgID)
             {
                 case 1:
-                    GetComponent<Image>().CrossFadeAlpha(0, 5, false);
+                    BabyBg.CrossFadeAlpha(0, 5, false);
                     break;
                 case 2:
                     KidBg.CrossFadeAlpha(0, 5, false);

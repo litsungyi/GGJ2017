@@ -19,7 +19,8 @@ public class PlayerAudio : MonoBehaviour {
 									  LEVEL_UP,
 									  MONSTER_YELL,
 									  PICK_COIN,
-									  POWER_UP
+									  POWER_UP,
+									  JET
 	                                  };
 	AudioSource player_audio;  
 	
@@ -37,68 +38,86 @@ public class PlayerAudio : MonoBehaviour {
     public AudioClip monsterYell;         		                      
 	public AudioClip pickCoin;
 	public AudioClip powerUp;
+	public AudioClip jet;
+
+	AudioClip bgSound = null;
+	float timeStemp;
+	
 	// Use this for initialization
 	void Awake () {	
 			player_audio = GetComponent <AudioSource> ();
+			bgSound = null;
+			player_audio.clip = bgSound;
+	        timeStemp = Time.time;
 	}
 	
 	// Update is called once per frame
 	void Update () {
-
+		
+			if(bgSound != null && Time.time - timeStemp > 1){
+				player_audio.Play();
+				timeStemp = Time.time;
+			}
 	}
 	
 	public void playSounds(Sounds clip)
 	{
-		bool soundsExist = true;
-		
+		AudioClip playClip = null;
 		switch(clip){
 			case Sounds.ADULT_SCREAM:
-				player_audio.clip = adultScream;
+				playClip = adultScream;
 				 break;
 			case Sounds.ADULT_WALK:
-				player_audio.clip = adultWalk;
+				playClip = adultWalk;
 				 break;
 			case Sounds.BABY_HURT:
-				player_audio.clip = babyHurt;
+				playClip = babyHurt;
 				 break;
 			case Sounds.BABY_LAUGH:
-				player_audio.clip = babyLaugh;
+				playClip = babyLaugh;
 				 break;
 			case Sounds.BABY_WALK:
-				player_audio.clip = babyWalk;
+				playClip = babyWalk;
 				 break;
 			case Sounds.EXPLOSION:
-				player_audio.clip = explosion;
+				playClip = explosion;
 				 break;
 			case Sounds.FEMALE_LAUGH:
-				player_audio.clip = femaleLaugh;
+				playClip = femaleLaugh;
 				 break;
 			case Sounds.FEMALE_SCREAM:
-				player_audio.clip = femaleScream;
+				playClip = femaleScream;
 				 break;
 			case Sounds.HIT:
-				player_audio.clip = hit;
+				playClip = hit;
 				 break;
 			case Sounds.JUMP:
-				player_audio.clip = jump;
+				playClip = jump;
 				 break;
 			case Sounds.LEVEL_UP:
-				player_audio.clip = levelUp;
+				playClip = levelUp;
 				 break;
 			case Sounds.MONSTER_YELL:
-				player_audio.clip = monsterYell;
+				playClip = monsterYell;
 				 break;
 			case Sounds.PICK_COIN:
-				player_audio.clip = pickCoin;
+				playClip = pickCoin;
 				 break;
 			case Sounds.POWER_UP:
-				player_audio.clip = powerUp;
+				playClip = powerUp;
+				 break;
+			case Sounds.JET:
+				playClip = jet;
 				 break;
 			default :
-				soundsExist = false;
+				//soundsExist = false;
 				break;
 		}
 		
-		if(soundsExist) player_audio.Play ();
+		if (playClip != null)
+		{
+			player_audio.PlayOneShot(playClip);
+		}
+		//player_audio.clip = bgSound;
 	}
 }

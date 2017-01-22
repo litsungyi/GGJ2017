@@ -15,6 +15,7 @@ public class obstacle : MonoBehaviour, ICollidable
 	void ICollidable.OnCollisionEnter(player target)
 	{
 		rend.material.color = Color.red;
+		target.Hurt();
 	}
 
 	void ICollidable.OnCollisionExit(player target)

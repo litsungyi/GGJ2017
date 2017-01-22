@@ -3,11 +3,17 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class obstacle2 : MonoBehaviour {
+	
 	public GameObject fire;
+	GameObject player;
+	PlayerAudio playerAudio;
+	
+	
 	// Use this for initialization
 	void Start () {
 		fire.SetActive (false);
-
+		player = GameObject.FindGameObjectWithTag ("Player");
+		playerAudio = player.GetComponent<PlayerAudio>();
 	}
 	
 	// Update is called once per frame
@@ -15,6 +21,7 @@ public class obstacle2 : MonoBehaviour {
 		if (col.collider.name == "player") {
 			Destroy (gameObject);
 			fire.SetActive (true);
+			playerAudio.playSounds(PlayerAudio.Sounds.EXPLOSION);
 			StartCoroutine (stopfire ());
 		}
 	}

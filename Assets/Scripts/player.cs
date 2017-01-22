@@ -13,7 +13,7 @@ public enum Age
 public class player : MonoBehaviour {
 	private bool gameStart;
 	private Rigidbody rg;
-	private BoxCollider boxCollider;
+	private CapsuleCollider boxCollider;
 	private bool waveEnabled;
 	private float originX;
 	private Quaternion originRotation;
@@ -42,7 +42,7 @@ public class player : MonoBehaviour {
 		originX = transform.localPosition.x;
 
 		rg = GetComponent<Rigidbody>();
-		boxCollider = GetComponent<BoxCollider>();
+		boxCollider = GetComponent<CapsuleCollider>();
 		UpdateModel();
 
 		originRotation = sparkle.transform.localRotation;
@@ -79,7 +79,8 @@ public class player : MonoBehaviour {
 
 		transform.Translate (Vector3.forward * speed *deltaTime, Space.World);
 		var localPosition = transform.localPosition;
-		transform.localPosition = new Vector3(originX, localPosition.y, localPosition.z);
+		var y = localPosition.y < -100 ? -100  : localPosition.y;
+		transform.localPosition = new Vector3(originX, y, localPosition.z);
 		
 	}
 
@@ -133,9 +134,10 @@ public class player : MonoBehaviour {
 		{
 			if (i == currentModel)
 			{
-				var childCollider = models[i].gameObject.GetComponent<BoxCollider>();
+				var childCollider = models[i].gameObject.GetComponent<CapsuleCollider>();
 				boxCollider.center = childCollider.center;
-				boxCollider.size = childCollider.size;
+				boxCollider.height = childCollider.height;
+				boxCollider.radius = childCollider.radius;
 				models[i].SetActive(true);
 			}
 			else

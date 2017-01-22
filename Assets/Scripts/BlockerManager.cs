@@ -135,7 +135,5 @@ public class BlockerManagerEditor : Editor
 			blockers.Add(blocker);
 		}
 	}
-#endif
-
 }
-
+#endif

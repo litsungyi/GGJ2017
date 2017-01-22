@@ -6,10 +6,12 @@ public class DayNightBackgroundController : MonoBehaviour {
     [SerializeField]
     public Transform player;
     float currentPlayerZ;
+    float defaultHight;
     // Use this for initialization
     void Start () {
         currentPlayerZ = player.localPosition.z;
-
+        defaultHight = player.localPosition.y;
+        Invoke("adjustJump", 0);
     }
 	
 	// Update is called once per frame
@@ -22,4 +24,12 @@ public class DayNightBackgroundController : MonoBehaviour {
            
         }
     }
+
+    void adjustJump()
+    {
+        transform.localPosition = (new Vector3(0, (defaultHight - player.localPosition.y)*50, 0));
+        Invoke("adjustJump", 0.05f);
+    }
+
+
 }

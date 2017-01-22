@@ -124,7 +124,10 @@ public class player : MonoBehaviour {
 	{
 		rg.AddForce(Vector3.forward*speed*speedModify);
 	}
-
+	public void SpeedCut(float speedModity)
+	{
+		rg.AddForce(Vector3.forward*speed*speedModity);
+	}
 	public void JumpUp(float speedModify)
 	{
 		rg.AddForce(Vector3.up*speedModify);

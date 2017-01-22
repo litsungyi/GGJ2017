@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class hithurt : MonoBehaviour, ICollidable
+public class minusSpeed : MonoBehaviour, ICollidable
 {
 	private Renderer rend;
 	[Range(-10,-500)]
@@ -22,8 +22,8 @@ public class hithurt : MonoBehaviour, ICollidable
 
 	void ICollidable.OnCollisionEnter(player target)
 	{
-		rend.material.color = Color.red;
 		target.SpeedCut (speedModify);
+		rend.material.color = Color.red;
 		playerAudio.playSounds(PlayerAudio.Sounds.MONSTER_YELL);
 		target.Hurt();
 	}

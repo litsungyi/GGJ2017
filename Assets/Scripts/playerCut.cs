@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class obstacle2 : MonoBehaviour {
+public class playerCut : MonoBehaviour {
 	
 	public GameObject fire;
 	GameObject player;

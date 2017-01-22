@@ -2,9 +2,9 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class babyUp : MonoBehaviour {
+public class playerUp : MonoBehaviour {
     
-    private ParticleSystem dissaperParticle;
+	public ParticleSystem dissaperParticle;
     [SerializeField]
     private GameObject goods;
 	// Use this for initialization

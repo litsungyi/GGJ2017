@@ -20,7 +20,8 @@ public class PlayerAudio : MonoBehaviour {
 									  PICK_COIN,
 									  POWER_UP,
 									  JET,
-									  SPEED_UP
+									  SPEED_UP,
+									  FALLING
 	                                  };
 	AudioSource player_audio;  
 	
@@ -40,7 +41,8 @@ public class PlayerAudio : MonoBehaviour {
 	public AudioClip powerUp;
 	public AudioClip jet;
 	public AudioClip speedUp;
-
+	public AudioClip falling;
+	
 	AudioClip bgSound = null;
 	float timeStemp;
 	
@@ -112,6 +114,9 @@ public class PlayerAudio : MonoBehaviour {
 				 break;
 			case Sounds.SPEED_UP:
 				playClip = speedUp;
+				 break;
+			case Sounds.FALLING:
+				playClip = falling;
 				 break;
 			default :
 				//soundsExist = false;

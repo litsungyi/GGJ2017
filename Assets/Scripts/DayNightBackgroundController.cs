@@ -38,7 +38,7 @@ public class DayNightBackgroundController : MonoBehaviour {
 
     void adjustJump()
     {
-        transform.localPosition = (new Vector3(0, (defaultHight - player.localPosition.y)*50, 0));
+        transform.localPosition = (new Vector3(0, (defaultHight - player.localPosition.y)*10, 0));
         Invoke("adjustJump", 0.05f);
     }
 

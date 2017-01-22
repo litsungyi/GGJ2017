@@ -12,7 +12,7 @@ public class playerCut : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		fire.SetActive (false);
-		player = GameObject.FindGameObjectWithTag ("Player");
+		player = GameObject.FindGameObjectWithTag ("player");
 		playerAudio = player.GetComponent<PlayerAudio>();
 	}
 	
@@ -27,7 +27,7 @@ public class playerCut : MonoBehaviour {
 	}
 	IEnumerator stopfire()
 	{
-		yield return new WaitForSeconds (2f);
+		yield return new WaitForSeconds (1f);
 		fire.GetComponent<ParticleSystem>().enableEmission = false;
 	}
 }

@@ -9,8 +9,8 @@ public class playerUp : MonoBehaviour {
     private GameObject goods;
 	// Use this for initialization
 	void Awake () {
-        dissaperParticle = gameObject.transform.FindChild("dissaperParticle").GetComponent<ParticleSystem>();
-        dissaperParticle.enableEmission = false;
+       // dissaperParticle = gameObject.transform.FindChild("dissaperParticle").GetComponent<ParticleSystem>();
+        //dissaperParticle.enableEmission = false;
     }
 	
 	// Update is called once per frame
@@ -26,7 +26,7 @@ public class playerUp : MonoBehaviour {
             goods.SetActive(false);
             this.gameObject.GetComponent<Collider>().enabled = false;
             //Invoke("dissaper", 0);
-            dissaperParticle.enableEmission = true;
+            //dissaperParticle.enableEmission = true;
             StartCoroutine(dissaperE());
 
         }
@@ -39,7 +39,7 @@ public class playerUp : MonoBehaviour {
     }
 
     void dissaper() {
-        dissaperParticle.enableEmission = false;
+        //dissaperParticle.enableEmission = false;
         Invoke("Destroy",2f);
         
     }

@@ -12,7 +12,7 @@ public class playerCut : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
 		fire.SetActive (false);
-		player = GameObject.FindGameObjectWithTag ("player");
+		player = GameObject.FindGameObjectWithTag ("Player");
 		playerAudio = player.GetComponent<PlayerAudio>();
 	}
 	

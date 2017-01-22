@@ -9,6 +9,8 @@ public class player : MonoBehaviour {
 	private float originX;
 	private Quaternion originRotation;
 
+	public GameObject weather;
+
 	public Transform sparkle;
 	public PlusUpParticleManager plusup;
 	[SerializeField] private WaveCalculator waveCalc;
@@ -24,7 +26,6 @@ public class player : MonoBehaviour {
 		originRotation = sparkle.transform.localRotation;
 		sparkle.GetComponent<ParticleSystem> ().enableEmission = false;
 		playerAudio = GetComponent<PlayerAudio>();
-		//playerAudio.playSounds(PlayerAudio.Sounds.BABY_HURT);
 		gameStart = false;
 	}
 
@@ -44,6 +45,7 @@ public class player : MonoBehaviour {
 	public void GameStart()
 	{
 		gameStart = true;
+		weather.SetActive (true);
 	}
 
 	public void Move(float deltaTime)
@@ -108,7 +110,7 @@ public class player : MonoBehaviour {
 		plusup.Enable(true);
 		waveCalc.amplitute += 10f;
 		waveCalc.waveLength *= 0.9f;
-
+		playerAudio.playSounds(PlayerAudio.Sounds.LEVEL_UP);
 		StartCoroutine (stopplusup ());
 	}
 
@@ -140,7 +142,6 @@ public class player : MonoBehaviour {
 		{
 			coollidable.OnCollisionEnter(this);
 		}
-		playerAudio.playSounds(PlayerAudio.Sounds.JET);
 	}
 
 	void OnTriggerEnter(Collider col)

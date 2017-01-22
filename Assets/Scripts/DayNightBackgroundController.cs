@@ -1,12 +1,20 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class DayNightBackgroundController : MonoBehaviour {
     [SerializeField]
     public Transform player;
+    [SerializeField]
+    public Image KidBg;
+    [SerializeField]
+    public Image AdultBg;
+    [SerializeField]
+    public Image ElderBg;
     float currentPlayerZ;
     float defaultHight;
+    int currentBgID = 0;
     // Use this for initialization
     void Start () {
         currentPlayerZ = player.localPosition.z;
@@ -23,6 +31,7 @@ public class DayNightBackgroundController : MonoBehaviour {
             currentPlayerZ = player.localPosition.z ;
            
         }
+        BackgroundChangeByAge();
     }
 
     void adjustJump()
@@ -31,5 +40,25 @@ public class DayNightBackgroundController : MonoBehaviour {
         Invoke("adjustJump", 0.05f);
     }
 
+    void BackgroundChangeByAge()
+    {
+        if (currentBgID < (int)player.GetComponent<player>().age)
+        {
+            currentBgID++;
+            Debug.Log(currentBgID);
+            switch (currentBgID)
+            {
+                case 1:
+                    GetComponent<Image>().CrossFadeAlpha(0, 5, false);
+                    break;
+                case 2:
+                    KidBg.CrossFadeAlpha(0, 5, false);
+                    break;
+                case 3:
+                    AdultBg.CrossFadeAlpha(0, 5, false);
+                    break;
 
+            }
+        }
+    }
 }

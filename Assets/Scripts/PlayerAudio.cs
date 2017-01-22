@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
 public class PlayerAudio : MonoBehaviour {
 
 	public enum Sounds{
@@ -20,7 +19,8 @@ public class PlayerAudio : MonoBehaviour {
 									  MONSTER_YELL,
 									  PICK_COIN,
 									  POWER_UP,
-									  JET
+									  JET,
+									  SPEED_UP
 	                                  };
 	AudioSource player_audio;  
 	
@@ -39,6 +39,7 @@ public class PlayerAudio : MonoBehaviour {
 	public AudioClip pickCoin;
 	public AudioClip powerUp;
 	public AudioClip jet;
+	public AudioClip speedUp;
 
 	AudioClip bgSound = null;
 	float timeStemp;
@@ -108,6 +109,9 @@ public class PlayerAudio : MonoBehaviour {
 				 break;
 			case Sounds.JET:
 				playClip = jet;
+				 break;
+			case Sounds.SPEED_UP:
+				playClip = speedUp;
 				 break;
 			default :
 				//soundsExist = false;

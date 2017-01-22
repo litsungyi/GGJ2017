@@ -7,9 +7,13 @@ public class jumppoint : MonoBehaviour, ICollidable
 	[Range(10, 1000)]
 	[SerializeField] private float speedModify = 500f;
 
+	GameObject player;
+	PlayerAudio playerAudio;
+	
 	// Use this for initialization
 	void Start () {
-		//rg = GetComponents<Rigidbody> ();	
+		player = GameObject.FindGameObjectWithTag ("Player");
+		playerAudio = player.GetComponent<PlayerAudio>();
 	}
 
 	#region ICollidable implementation
@@ -17,6 +21,7 @@ public class jumppoint : MonoBehaviour, ICollidable
 	void ICollidable.OnCollisionEnter(player target)
 	{
 		target.JumpUp(speedModify);
+		playerAudio.playSounds(PlayerAudio.Sounds.SPEED_UP);
 		Destroy(gameObject);
 	}
 
